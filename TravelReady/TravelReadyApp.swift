@@ -1,17 +1,16 @@
-//
-//  TravelReadyApp.swift
-//  TravelReady
-//
-//  Created by Mariswaran Balasubramanian on 11/19/25.
-//
-
 import SwiftUI
+import SwiftData
 
 @main
 struct TravelReadyApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            RootView()
         }
+        .modelContainer(for: [
+            Trip.self,
+            ChecklistItem.self,
+            ChecklistCategory.self
+        ])
     }
 }
