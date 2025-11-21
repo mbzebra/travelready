@@ -49,3 +49,16 @@ enum TripPhase: String, Codable, CaseIterable, Identifiable {
         }
     }
 }
+
+
+extension TripPhase {
+    static func fromAPI(_ value: String) -> TripPhase {
+        switch value.uppercased() {
+        case "PRE_TRAVEL": return .pre
+        case "IN_TRAVEL":  return .inTravel
+        case "END_TRAVEL": return .end
+        case "POST_TRAVEL": return .post
+        default: return .pre
+        }
+    }
+}

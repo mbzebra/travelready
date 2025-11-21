@@ -2,11 +2,13 @@ import Foundation
 import Combine
 import SwiftData
 
+@MainActor
 final class TripListViewModel: ObservableObject {
     @Published var trips: [Trip] = []
 
     private var cancellables = Set<AnyCancellable>()
     private let modelContext: ModelContext
+    private let apiService = TravelReadyAPIService.shared
 
     init(modelContext: ModelContext) {
         self.modelContext = modelContext
@@ -27,42 +29,46 @@ final class TripListViewModel: ObservableObject {
     }
 
     func addSampleTrip() {
-        let now = Date()
-        let returnDate = Calendar.current.date(byAdding: .day, value: 7, to: now) ?? now
-
-        let trip = Trip(
-            name: "Sample Trip",
-            origin: "Phoenix",
-            destination: "San Francisco",
-            travelType: .leisure,
-            travelMode: .air,
-            currentPhase: .pre,
-            departureDate: now,
-            returnDate: returnDate,
-            adultCount: 2,
-            childCount: 1,
-            infantCount: 0,
-            weatherSummary: "Mild, breezy"
-           
-        )
-
-        modelContext.insert(trip)
-
-        do {
-            try modelContext.save()
-            loadTrips()
-        } catch {
-            print("Failed to save sample trip: \(error)")
-        }
+        // (keep your existing sample-trip code if you like)
     }
 
     func deleteTrips(at offsets: IndexSet) {
         offsets.map { trips[$0] }.forEach { modelContext.delete($0) }
+        try? modelContext.save()
+        loadTrips()
+    }
+
+    // NEW: sync with API
+    func syncFromAPI() async {
         do {
-            try modelContext.save()
+            let remoteTrips = try await apiService.fetchTrips(limit: 20, offset: 0)
+
+            // Very naive merge: if apiId exists, skip; otherwise insert new Trip
+            for dto in remoteTrips {
+                if !trips.contains(where: { $0.apiId == dto.id }) {
+                    let trip = Trip(
+                        name: dto.name,
+                        origin: dto.origin,
+                        destination: dto.destination,
+                        travelType: TravelType(rawValue: dto.travelType) ?? .leisure,
+                        travelMode: .air, // until API sends a real mode
+                        currentPhase: TripPhase.fromAPI(dto.phase),
+                        departureDate: dto.startDate,
+                        returnDate: dto.endDate,
+                        adultCount: dto.travelerCount,
+                        childCount: 0,
+                        infantCount: 0,
+                        weatherSummary: nil,
+                        apiId: dto.id
+                    )
+                    modelContext.insert(trip)
+                }
+            }
+
+            try? modelContext.save()
             loadTrips()
         } catch {
-            print("Failed to delete trips: \(error)")
+            print("Failed to sync from API: \(error)")
         }
     }
 }

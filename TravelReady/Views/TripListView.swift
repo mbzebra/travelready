@@ -1,4 +1,5 @@
 import SwiftUI
+import SwiftData
 
 struct TripListView: View {
     @ObservedObject var viewModel: TripListViewModel
@@ -16,6 +17,14 @@ struct TripListView: View {
         }
         .navigationTitle("TravelReady")
         .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button {
+                    Task { await viewModel.syncFromAPI() }
+                } label: {
+                    Image(systemName: "arrow.triangle.2.circlepath")
+                }
+            }
+
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
                     viewModel.addSampleTrip()
@@ -24,11 +33,13 @@ struct TripListView: View {
                 }
             }
         }
-        .onAppear {
-            viewModel.loadTrips()
+        .task {
+            await viewModel.syncFromAPI()
         }
     }
 }
+
+// MARK: - Row view
 
 struct TripRowView: View {
     let trip: Trip
@@ -37,20 +48,23 @@ struct TripRowView: View {
         VStack(alignment: .leading, spacing: 4) {
             Text(trip.name)
                 .font(.headline)
+
             Text("\(trip.origin) → \(trip.destination)")
                 .font(.subheadline)
 
             HStack(spacing: 8) {
                 Text(trip.travelType.displayName)
                     .font(.caption)
-                    .padding(4)
-                    .background(.blue.opacity(0.1))
+                    .padding(.horizontal, 6)
+                    .padding(.vertical, 2)
+                    .background(Color.blue.opacity(0.1))
                     .clipShape(RoundedRectangle(cornerRadius: 6))
 
                 Text(trip.currentPhase.displayName)
                     .font(.caption2)
-                    .padding(4)
-                    .background(.green.opacity(0.1))
+                    .padding(.horizontal, 6)
+                    .padding(.vertical, 2)
+                    .background(Color.green.opacity(0.1))
                     .clipShape(RoundedRectangle(cornerRadius: 6))
             }
 

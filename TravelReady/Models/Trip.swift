@@ -23,6 +23,8 @@ final class Trip {
     
     var weatherSummary: String?
 
+    var apiId: String?
+
 
     init(
         id: UUID = UUID(),
@@ -37,7 +39,9 @@ final class Trip {
         adultCount: Int = 1,
         childCount: Int = 0,
         infantCount: Int = 0,
-        weatherSummary: String? = nil      // NEW
+        weatherSummary: String? = nil,
+        apiId: String? = nil
+
     ) {
         self.id = id
         self.name = name
@@ -52,6 +56,8 @@ final class Trip {
         self.childCount = childCount
         self.infantCount = infantCount
         self.weatherSummary = weatherSummary
+        self.apiId = apiId
+
 
     }
 }
