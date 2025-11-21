@@ -6,6 +6,11 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		0C95ED502ED01898002D2AC5 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 0C95ED4F2ED01898002D2AC5 /* GoogleSignIn */; };
+		0C95ED522ED01898002D2AC5 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 0C95ED512ED01898002D2AC5 /* GoogleSignInSwift */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		0C95ECCD2ECED017002D2AC5 /* TravelReady.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TravelReady.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -14,6 +19,7 @@
 		0C95ED132ECEEA8A002D2AC5 /* Exceptions for "TravelReady" folder in "TravelReady" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				Info.plist,
 				Models/TripMapping.swift,
 			);
 			target = 0C95ECCC2ECED017002D2AC5 /* TravelReady */;
@@ -47,6 +53,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0C95ED502ED01898002D2AC5 /* GoogleSignIn in Frameworks */,
+				0C95ED522ED01898002D2AC5 /* GoogleSignInSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -89,6 +97,8 @@
 			);
 			name = TravelReady;
 			packageProductDependencies = (
+				0C95ED4F2ED01898002D2AC5 /* GoogleSignIn */,
+				0C95ED512ED01898002D2AC5 /* GoogleSignInSwift */,
 			);
 			productName = TravelReady;
 			productReference = 0C95ECCD2ECED017002D2AC5 /* TravelReady.app */;
@@ -118,6 +128,9 @@
 			);
 			mainGroup = 0C95ECC42ECED017002D2AC5;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				0C95ED4E2ED01898002D2AC5 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 0C95ECCE2ECED017002D2AC5 /* Products */;
 			projectDirPath = "";
@@ -280,6 +293,7 @@
 				DEVELOPMENT_TEAM = UX2DZ2S4X4;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = TravelReady/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -312,6 +326,7 @@
 				DEVELOPMENT_TEAM = UX2DZ2S4X4;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = TravelReady/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -356,6 +371,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		0C95ED4E2ED01898002D2AC5 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/google/GoogleSignIn-iOS";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 9.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		0C95ED4F2ED01898002D2AC5 /* GoogleSignIn */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0C95ED4E2ED01898002D2AC5 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignIn;
+		};
+		0C95ED512ED01898002D2AC5 /* GoogleSignInSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0C95ED4E2ED01898002D2AC5 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignInSwift;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 0C95ECC52ECED017002D2AC5 /* Project object */;
 }
